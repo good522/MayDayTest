@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragment.LongFragment">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/long_comments"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:padding="8dp"
+        android:scrollbars="vertical"
+        android:orientation="vertical"
+        android:background="#FFFFFF"/>
+
+    <ProgressBar
+        android:id="@+id/long_progress_bar"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="暂无长评论"
+        android:textSize="16sp"
+        android:layout_gravity="center"
+        android:visibility="gone"
+        android:textColor="#666666" />
+
+</FrameLayout>
