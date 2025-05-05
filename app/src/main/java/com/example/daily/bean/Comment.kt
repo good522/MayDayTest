@@ -6,6 +6,6 @@ data class Comment(
     val content: String,
     val id: Int,
     val likes: Int,
-    val reply_to: ReplyTo,
-    val time: Int
+//    val reply_to: ReplyTo,
+    val time: Long
 )

@@ -10,7 +10,6 @@ import kotlinx.coroutines.launch
 import com.example.daily.bean.Comment
 
 class ShortViewModel : ViewModel() {
-
     private val _shortComments = MutableLiveData<List<Comment>>()
     val shortComments: LiveData<List<Comment>> get() = _shortComments
 
@@ -25,6 +24,7 @@ class ShortViewModel : ViewModel() {
                 Log.d("ShortViewModel", "shortResponse: $response")
                 _shortComments.value = response.comments
             } catch (e: Exception) {
+                Log.e("ShortViewModel", "Error loading short comments: ${e.message}")
                 e.printStackTrace()
                 _shortComments.value = emptyList() // 或者保留上次数据
             }finally {

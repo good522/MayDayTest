@@ -35,25 +35,30 @@ class ShortFragment : Fragment() {
     }
 
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        storyId = arguments?.getLong("storyId") ?: 0
-        shortViewModel = ViewModelProvider(this)[ShortViewModel::class.java]
-        shortViewModel.loadShortComments(storyId)
-    }
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        storyId = arguments?.getLong("storyId") ?: 0
+//        shortViewModel = ViewModelProvider(this)[ShortViewModel::class.java]
+//        Log.d("ID", " ${storyId}")
+//        shortViewModel.loadShortComments(storyId)
+//
+//    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.d("aaa", "onCreateView: ")
         return inflater.inflate(R.layout.fragment_short, container, false)
     }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView = view.findViewById(R.id.short_comments)
-        progressBar = view.findViewById(R.id.short_progress_bar)
-        emptyView = view.findViewById(R.id.empty_view)
-        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+
+        initView(view)
+        storyId = arguments?.getLong("storyId") ?: 0
+        shortViewModel = ViewModelProvider(this)[ShortViewModel::class.java]
+        Log.d("ID", " ${storyId}")
+        shortViewModel.loadShortComments(storyId)
 
         // 加载中状态
         shortViewModel.isLoading.observe(viewLifecycleOwner) { loading ->
@@ -66,5 +71,11 @@ class ShortFragment : Fragment() {
             adapter.submitList(comments)
             emptyView.visibility = if (comments.isEmpty()) View.VISIBLE else View.GONE
         }
+    }
+    fun initView(view: View) {
+        recyclerView = view.findViewById(R.id.short_comments)
+        progressBar = view.findViewById(R.id.short_progress_bar)
+        emptyView = view.findViewById(R.id.empty_view)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
     }
 }

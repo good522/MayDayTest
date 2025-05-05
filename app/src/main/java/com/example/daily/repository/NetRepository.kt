@@ -19,7 +19,6 @@ object NetRepository {
         .build()
 
     val apiService = retrofit.create(ApiService::class.java)
-
     interface ApiService {
 
         // 获取最新新闻
@@ -28,7 +27,7 @@ object NetRepository {
         suspend fun getLatest(): Latest
 
         // 获取指定日期的新闻
-        @GET("news/before/{date}")
+        @GET("news/before/date")
         //配合 lifecycleScope.launch 使用协程
         suspend fun getBefore(@Path("date") date: String): Before
 
@@ -38,10 +37,10 @@ object NetRepository {
 
         // 获取文章的长评论
         @GET("story/{id}/long-comments")
-        fun getLongComments(@Path("id") storyId: Long): Comments
+        suspend fun getLongComments(@Path("id") storyId: Long): Comments
 
         // 获取文章的短评论
         @GET("story/{id}/short-comments")
-        fun getShortComments(@Path("id") storyId: Long): Comments
+        suspend fun getShortComments(@Path("id") storyId: Long): Comments
     }
 }

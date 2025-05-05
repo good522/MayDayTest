@@ -30,17 +30,19 @@ class MainViewModel : ViewModel() {
                 e.printStackTrace()
             }
         }
-         fun loadMore(date: String) {
-             viewModelScope.launch {
-                 try {
-                     val before = NetRepository.apiService.getBefore(date)
-                     val newList = (_stories.value ?: emptyList()) + (before.stories ?: emptyList())
-                     _stories.value = newList
-                 } catch (e: Exception) {
-                     e.printStackTrace()
-                 }
-             }
-         }
+    }
+    fun loadMore(date: String) {
+        viewModelScope.launch {
+            try {
+                val before = NetRepository.apiService.getBefore(date)
+                val newList = (_stories.value ?: emptyList()) + (before.stories ?: emptyList())
+                _stories.value = newList
+                // 更新日期为加载到的旧日期
+                _date.value = before.date
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 }
 
