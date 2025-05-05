@@ -1,5 +1,6 @@
 package com.example.daily.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,7 +32,7 @@ class MainViewModel : ViewModel() {
             }
         }
     }
-    fun loadMore(date: String) {
+    fun loadMore(date: String,  onComplete: () -> Unit) {
         viewModelScope.launch {
             try {
                 val before = NetRepository.apiService.getBefore(date)
@@ -39,8 +40,11 @@ class MainViewModel : ViewModel() {
                 _stories.value = newList
                 // 更新日期为加载到的旧日期
                 _date.value = before.date
+                Log.d("MainViewModel", "Load more successful: ${before.stories?.size} items loaded")
             } catch (e: Exception) {
                 e.printStackTrace()
+            }finally {
+                onComplete() // 关键：加载完成后重置状态
             }
         }
     }

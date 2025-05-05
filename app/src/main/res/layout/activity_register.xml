@@ -46,11 +46,11 @@
         app:layout_constraintVertical_bias="0.088" />
 
     <android.widget.Button
-        android:id="@+id/button_back"
+        android:id="@+id/button_register_back"
         android:layout_width="200dp"
         android:layout_height="60dp"
         android:background="@drawable/select_button"
-        android:text="返回"
+        android:text="返回登录"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/button_conserve"
@@ -58,6 +58,20 @@
         app:layout_constraintStart_toStartOf="@+id/button_conserve"
         app:layout_constraintTop_toBottomOf="@+id/button_conserve"
         app:layout_constraintVertical_bias="0.128" />
+
+    <android.widget.Button
+        android:id="@+id/button_back"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:background="@drawable/select_button"
+        android:text="返回首页"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/button_register_back"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/button_register_back"
+        app:layout_constraintTop_toBottomOf="@+id/button_register_back"
+        app:layout_constraintVertical_bias="0.515" />
 
     <EditText
         android:id="@+id/et_register_password"

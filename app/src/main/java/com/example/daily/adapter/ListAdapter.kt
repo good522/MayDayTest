@@ -1,6 +1,8 @@
 package com.example.daily.adapter
 
 
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -65,6 +67,33 @@ class ListAdapter (private val onItemClick: (Long) -> Unit
 
                 override fun onPageScrollStateChanged(state: Int) {}
             })
+            startAutoScroll()
+        }
+        private var autoScrollHandler: Handler? = null
+
+        private val autoScrollRunnable = object : Runnable {
+            override fun run() {
+                if (bannerList.isNotEmpty()) {
+                    val currentItem = viewPager.currentItem
+                    val nextItem = (currentItem + 1) % bannerList.size
+                    viewPager.setCurrentItem(nextItem, true)
+
+                    // 继续下一次滚动
+                    autoScrollHandler?.postDelayed(this, 5000)
+                }
+            }
+        }
+
+        private fun startAutoScroll() {
+            if (autoScrollHandler == null) {
+                autoScrollHandler = Handler(Looper.getMainLooper())
+            }
+            autoScrollHandler?.postDelayed(autoScrollRunnable, 5000)
+        }
+
+        fun stopAutoScroll() {
+            autoScrollHandler?.removeCallbacks(autoScrollRunnable)
+            autoScrollHandler = null
         }
 
         private fun createIndicators(size: Int, selectedPosition: Int) {
@@ -122,11 +151,13 @@ class ListAdapter (private val onItemClick: (Long) -> Unit
         }
     }
 
+    private var bannerViewHolder: BannerViewHolder? = null
     // 绑定数据
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is BannerViewHolder){
+            bannerViewHolder = holder
             holder.bind(bannerList)
-        }else if ( holder is LtViewHolder){
+        } else if ( holder is LtViewHolder){
             // 获取数据
             val rvData = getItem(position -1)
             holder.title_tv.text = rvData.title

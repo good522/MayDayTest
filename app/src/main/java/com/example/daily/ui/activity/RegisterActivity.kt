@@ -12,6 +12,7 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var mEtUserName : EditText
     private lateinit var mEtPassword : EditText
     private lateinit var mBtnRegister : Button
+    private lateinit var mBtnRegisterBack : Button
     private lateinit var mBtnBack : Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +21,7 @@ class RegisterActivity : AppCompatActivity() {
         mEtPassword = findViewById(R.id.et_register_password)
         mBtnRegister = findViewById(R.id.button_conserve)
         mBtnBack = findViewById(R.id.button_back)
+        mBtnRegisterBack = findViewById(R.id.button_register_back)
         initClick()
     }
 
@@ -27,6 +29,9 @@ class RegisterActivity : AppCompatActivity() {
         mBtnBack.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
+        }
+        mBtnRegisterBack.setOnClickListener {
+            finish()
         }
         mBtnRegister.setOnClickListener {
             val userName = mEtUserName.editableText.toString()

@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             Log.d("ListAdapter", "点击的 story: $position")
         }
         // 观察 ViewModel 中的数据
-        rvViewModel.rvList.observe(this) { list ->
+        mainViewModel.stories.observe(this) { list ->
             storyList = list//用于保存跳转参数
             listAdapter.submitList(list)
         }
@@ -67,11 +67,16 @@ class MainActivity : AppCompatActivity() {
                 val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
                 val totalItemCount = layoutManager.itemCount
 
-                // 快到底部时加载更多，避免重复触发可添加一个加载标志位
+                Log.d("Scroll", "Scrolled: lastVisible=$lastVisibleItem total=$totalItemCount")
+
+                // 快到底部时加载更多
                 if (lastVisibleItem >= totalItemCount - 5 && !isLoadingMore) {
                     isLoadingMore = true
                     val currentDate = mainViewModel.date.value ?: return
-                    mainViewModel.loadMore(currentDate)
+                    mainViewModel.loadMore(currentDate) {
+                        isLoadingMore = false
+                        listAdapter.notifyDataSetChanged()
+                    }
                 }
             }
         })
@@ -83,18 +88,12 @@ class MainActivity : AppCompatActivity() {
             listAdapter.setBannerList(it)
         }
 
-        mainViewModel.stories.observe(this) { list ->
-            storyList = list
-            listAdapter.submitList(list)
-        }
-
         mainViewModel.date.observe(this) {
             dataTextView.text = it
         }
 
         mainViewModel.fetchData() // 启动加载
         initClick()
-        startAutoScroll()
     }
 
     private fun initClick() {
@@ -105,33 +104,8 @@ class MainActivity : AppCompatActivity() {
         dataTextView.setOnClickListener {
         }
     }
-
-    private var autoScrollHandler: Handler? = null
-
-    private val autoScrollRunnable = object : Runnable {
-        override fun run() {
-            if (bannerList.isNotEmpty()) {
-                val currentItem = viewPager.currentItem
-                val nextItem = (currentItem + 1) % bannerList.size
-                viewPager.setCurrentItem(nextItem, true)
-
-                // 继续下一次滚动
-                autoScrollHandler?.postDelayed(this, 5000)
-            }
-        }
-    }
-
-    private fun startAutoScroll() {
-        if (autoScrollHandler == null) {
-            autoScrollHandler = Handler(Looper.getMainLooper())
-        }
-        autoScrollHandler?.postDelayed(autoScrollRunnable, 5000)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
-        // 停止自动滚动，防止内存泄露
-        autoScrollHandler?.removeCallbacks(autoScrollRunnable)
-        autoScrollHandler = null
+//        listAdapter.stopAutoScroll()  // 通知 ViewHolder 停止轮播，避免内存泄露
     }
 }

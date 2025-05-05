@@ -13,11 +13,13 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var mEtPassword : EditText
     private lateinit var mBtnLogin : Button
     private lateinit var mBtnRegister : Button
+    private lateinit var mBtnLoginBack : Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         mBtnLogin = findViewById(R.id.button_login)
         mBtnRegister = findViewById(R.id.button_register)
+        mBtnLoginBack = findViewById(R.id.button_login_back)
         mEtUserName = findViewById(R.id.et_login_username)
         mEtPassword = findViewById(R.id.et_login_password)
         initClick()
@@ -44,6 +46,9 @@ class LoginActivity : AppCompatActivity() {
         mBtnRegister.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
+        }
+        mBtnLoginBack.setOnClickListener {
+            finish()
         }
     }
 }
