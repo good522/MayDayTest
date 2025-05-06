@@ -33,6 +33,7 @@ class MainViewModel : ViewModel() {
         }
     }
     fun loadMore(date: String,  onComplete: () -> Unit) {
+        Log.d("LoadMore", "loadMore() called with date = $date")
         viewModelScope.launch {
             try {
                 val before = NetRepository.apiService.getBefore(date)
@@ -44,6 +45,7 @@ class MainViewModel : ViewModel() {
             } catch (e: Exception) {
                 e.printStackTrace()
             }finally {
+                Log.d("LoadMore", "loadMore finally block")
                 onComplete() // 关键：加载完成后重置状态
             }
         }

@@ -22,7 +22,7 @@ import com.example.daily.ui.activity.StoryActivity
 import com.example.daily.ui.activity.TransmitActivity
 import com.example.daily.viewModel.StoryViewModel
 
-class WebViewFragment : Fragment() {
+public class WebViewFragment : Fragment() {
     private lateinit var webView: WebView
     private lateinit var backBtn:Button
     private lateinit var commentsBtn:Button

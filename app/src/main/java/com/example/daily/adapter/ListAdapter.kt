@@ -1,6 +1,5 @@
 package com.example.daily.adapter
 
-
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -139,7 +138,9 @@ class ListAdapter (private val onItemClick: (Long) -> Unit
         bannerList = banners
         notifyItemChanged(0)
     }
-
+    fun stopAutoScroll() {
+        bannerViewHolder?.stopAutoScroll()
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == VIEW_TYPE_BANNER){

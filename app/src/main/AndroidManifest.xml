@@ -21,9 +21,6 @@
             android:name=".ui.activity.CommentsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.fragment.WebViewFragment"
-            android:exported="false" />
-        <activity
             android:name=".ui.activity.StoryActivity"
             android:exported="false" />
         <activity

@@ -1,14 +1,11 @@
 package com.example.daily.ui.activity
 
-
 import android.content.Intent
 import android.os.Bundle
-import android.os.Looper
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager.widget.ViewPager
 import com.example.daily.adapter.BannerAdapter
-import android.os.Handler
 import android.util.Log
 import android.widget.Button
 import android.widget.TextView
@@ -70,7 +67,9 @@ class MainActivity : AppCompatActivity() {
                 Log.d("Scroll", "Scrolled: lastVisible=$lastVisibleItem total=$totalItemCount")
 
                 // 快到底部时加载更多
-                if (lastVisibleItem >= totalItemCount - 5 && !isLoadingMore) {
+                if (lastVisibleItem >= totalItemCount - 2 && !isLoadingMore) {
+                    Log.d("LoadMore", "check: last=$lastVisibleItem >= ${totalItemCount - 2}, isLoadingMore=$isLoadingMore")
+                    Log.d("LoadMore", "条件成立？ lastVisible=$lastVisibleItem >= ${totalItemCount - 2}, isLoadingMore=$isLoadingMore")
                     isLoadingMore = true
                     val currentDate = mainViewModel.date.value ?: return
                     mainViewModel.loadMore(currentDate) {
@@ -106,6 +105,6 @@ class MainActivity : AppCompatActivity() {
     }
     override fun onDestroy() {
         super.onDestroy()
-//        listAdapter.stopAutoScroll()  // 通知 ViewHolder 停止轮播，避免内存泄露
+        listAdapter.stopAutoScroll()  // 通知 ViewHolder 停止轮播，避免内存泄露
     }
 }
